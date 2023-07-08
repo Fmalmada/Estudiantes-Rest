@@ -33,7 +33,7 @@ public class CursoService {
                 .collect(Collectors.toList());
     }
 
-    public CursoDTO actualiarCurso(Long id, CursoDTO unCursoDto) {
+    public CursoDTO actualizarCurso(Long id, CursoDTO unCursoDto) {
         Curso unCurso = new Curso();
         unCurso.setId(id);
         unCurso.setNombre(unCursoDto.getNombre());

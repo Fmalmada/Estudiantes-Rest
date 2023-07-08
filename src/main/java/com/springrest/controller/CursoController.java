@@ -1,7 +1,6 @@
 package com.springrest.controller;
 
 import com.springrest.dto.CursoDTO;
-import com.springrest.repository.CursoRepository;
 import com.springrest.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class CursoController {
 
     @PutMapping("/{id}")
     public CursoDTO actualizarCurso(@PathVariable Long id, @RequestBody CursoDTO unCursoDto) {
-        return unCursoService.actualiarCurso(id, unCursoDto);
+        return unCursoService.actualizarCurso(id, unCursoDto);
     }
 
     @DeleteMapping("/{id}")

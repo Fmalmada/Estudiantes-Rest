@@ -1,18 +1,12 @@
-package com.springrest.domain;
+package com.springrest.dto;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
-
-@Entity
 @Data
-public class Estudiante {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+@AllArgsConstructor
+public class EstudianteDTO {
     private String nombre;
     private String apellido;
     private String email;
