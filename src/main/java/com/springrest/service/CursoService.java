@@ -34,8 +34,13 @@ public class CursoService {
     }
 
     public CursoDTO actualizarCurso(Long id, CursoDTO unCursoDto) {
-        Curso unCurso = new Curso();
-        unCurso.setId(id);
+        Optional<Curso> cursoOpcional = unCursoRepo.findById(id);
+
+        if (cursoOpcional.isEmpty()) {
+            throw new RuntimeException("Id invalido");
+        }
+
+        Curso unCurso = cursoOpcional.get();
         unCurso.setNombre(unCursoDto.getNombre());
         unCurso.setDescripcion(unCursoDto.getDescripcion());
         unCurso.setFechaDeFin(unCursoDto.getFechaDeFin());

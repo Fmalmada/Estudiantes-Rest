@@ -50,8 +50,14 @@ public class EstudianteService {
     }
 
     public EstudianteDTO actualizarEstudiante(Long unId, EstudianteDTO unEstudianteDTO){
-        Estudiante unEstudiante = new Estudiante();
-        unEstudiante.setId(unId);
+        Optional<Estudiante> unEstudianteOpcional = estudiantesRepo.findById(unId);
+
+        if (unEstudianteOpcional.isEmpty()) {
+            throw new RuntimeException("Id invalido");
+        }
+
+        Estudiante unEstudiante = unEstudianteOpcional.get();
+
         unEstudiante.setNombre(unEstudianteDTO.getNombre());
         unEstudiante.setDni(unEstudianteDTO.getDni());
         unEstudiante.setEdad(unEstudianteDTO.getEdad());
