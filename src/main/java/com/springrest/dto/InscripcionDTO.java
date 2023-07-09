@@ -10,7 +10,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class InscripcionDTO {
-    private Long id;
     private String estado;
     private Date fechaDeInscripcion;
     private Curso unCurso;
