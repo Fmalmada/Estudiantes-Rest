@@ -4,7 +4,10 @@ import com.springrest.domain.Curso;
 import com.springrest.dto.CursoDTO;
 import com.springrest.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +19,7 @@ public class CursoService {
     @Autowired
     private CursoRepository unCursoRepo;
 
-    public CursoDTO guardarCurso(CursoDTO unCursoDto) {
+    public ResponseEntity<CursoDTO> guardarCurso(CursoDTO unCursoDto) {
         Curso unCurso = new Curso();
         unCurso.setNombre(unCursoDto.getNombre());
         unCurso.setDescripcion(unCursoDto.getDescripcion());
@@ -24,20 +27,20 @@ public class CursoService {
         unCurso.setFechaDeInicio(unCursoDto.getFechaDeInicio());
 
         unCursoRepo.save(unCurso);
-        return unCursoDto;
+        return  new ResponseEntity<>(unCursoDto,HttpStatus.CREATED);
     }
 
-    public List<CursoDTO> conseguirTodos() {
-        return unCursoRepo.findAll()
+    public ResponseEntity<List<CursoDTO>> conseguirTodos() {
+        return  new ResponseEntity<>(unCursoRepo.findAll()
                 .stream().map(c -> new CursoDTO(c.getNombre(), c.getDescripcion(), c.getFechaDeInicio(), c.getFechaDeFin()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()),HttpStatus.OK);
     }
 
-    public CursoDTO actualizarCurso(Long id, CursoDTO unCursoDto) {
+    public ResponseEntity<CursoDTO> actualizarCurso(Long id, CursoDTO unCursoDto) {
         Optional<Curso> cursoOpcional = unCursoRepo.findById(id);
 
         if (cursoOpcional.isEmpty()) {
-            throw new RuntimeException("Id invalido");
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
         Curso unCurso = cursoOpcional.get();
@@ -47,24 +50,27 @@ public class CursoService {
         unCurso.setFechaDeInicio(unCursoDto.getFechaDeInicio());
 
         unCursoRepo.save(unCurso);
-        return unCursoDto;
+        return new ResponseEntity<>(unCursoDto, HttpStatus.OK);
     }
 
-    public CursoDTO encontrarCurso(Long id) {
+    public ResponseEntity<CursoDTO> encontrarCurso(Long id) {
         Optional<Curso> cursoOpcional = unCursoRepo.findById(id);
 
         if (cursoOpcional.isEmpty()) {
-            throw new RuntimeException("Id invalido");
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
         Curso unCurso = cursoOpcional.get();
-        return new CursoDTO(unCurso.getNombre(), unCurso.getDescripcion(), unCurso.getFechaDeInicio(), unCurso.getFechaDeFin());
+        return new ResponseEntity<> (new CursoDTO(unCurso.getNombre(), unCurso.getDescripcion(), unCurso.getFechaDeInicio(),
+                unCurso.getFechaDeFin()), HttpStatus.CREATED);
 
     }
 
-    public void borrarCUrso(Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void borrarCurso(Long id) {
         unCursoRepo.deleteById(id);
     }
+
 
 
 
