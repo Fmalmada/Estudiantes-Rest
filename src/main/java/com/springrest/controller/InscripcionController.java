@@ -2,6 +2,7 @@ package com.springrest.controller;
 
 import com.springrest.dto.InscripcionDTO;
 import com.springrest.service.InscripcionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class InscripcionController {
     InscripcionService inscripcionService;
 
     @PostMapping
-    public InscripcionDTO crearInscripcion(@RequestBody InscripcionDTO unaInscripcionDTO) {
+    public InscripcionDTO crearInscripcion(@RequestBody @Valid InscripcionDTO unaInscripcionDTO) {
         return inscripcionService.crearInscripcion(unaInscripcionDTO);
     }
 
@@ -30,7 +31,7 @@ public class InscripcionController {
     }
 
     @PutMapping("/{id}")
-    public InscripcionDTO actualizarInscripcion(@PathVariable Long id, @RequestBody InscripcionDTO unaInscripcionDTO) {
+    public InscripcionDTO actualizarInscripcion(@PathVariable Long id, @RequestBody @Valid InscripcionDTO unaInscripcionDTO) {
         return inscripcionService.actualizarInscripcion(id, unaInscripcionDTO);
     }
 

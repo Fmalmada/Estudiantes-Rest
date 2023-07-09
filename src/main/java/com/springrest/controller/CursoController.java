@@ -2,6 +2,7 @@ package com.springrest.controller;
 
 import com.springrest.dto.CursoDTO;
 import com.springrest.service.CursoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class CursoController {
     CursoService unCursoService;
 
     @PostMapping
-    public CursoDTO guardarCurso(@RequestBody CursoDTO unCursoDto) {
+    public CursoDTO guardarCurso(@RequestBody @Valid CursoDTO unCursoDto) {
         return unCursoService.guardarCurso(unCursoDto);
     }
 
@@ -30,7 +31,7 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public CursoDTO actualizarCurso(@PathVariable Long id, @RequestBody CursoDTO unCursoDto) {
+    public CursoDTO actualizarCurso(@PathVariable Long id, @RequestBody @Valid CursoDTO unCursoDto) {
         return unCursoService.actualizarCurso(id, unCursoDto);
     }
 
