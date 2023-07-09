@@ -4,6 +4,7 @@ import com.springrest.dto.EstudianteDTO;
 import com.springrest.service.EstudianteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,23 +17,23 @@ public class EstudianteController {
     EstudianteService unEstudianteService;
 
     @PostMapping
-    public EstudianteDTO crearEstudiante(@RequestBody @Valid EstudianteDTO unEstudianteDTO) {
+    public ResponseEntity<EstudianteDTO> crearEstudiante(@RequestBody @Valid EstudianteDTO unEstudianteDTO) {
         return unEstudianteService.crearEstudiante(unEstudianteDTO);
     }
 
     @GetMapping
-    public List<EstudianteDTO> conseguirEstudiantes() {
+    public ResponseEntity<List<EstudianteDTO>> conseguirEstudiantes() {
         return unEstudianteService.conseguirEstudiantes();
 
     }
 
     @GetMapping("/{id}")
-    public EstudianteDTO conseguirEstudiante(@PathVariable Long id) {
+    public ResponseEntity<EstudianteDTO> conseguirEstudiante(@PathVariable Long id) {
         return unEstudianteService.conseguirEstudiante(id);
     }
 
     @PutMapping("/{id}")
-    public EstudianteDTO actualizarEstudiante(@PathVariable Long id, @RequestBody @Valid EstudianteDTO unEstudianteDto) {
+    public ResponseEntity<EstudianteDTO> actualizarEstudiante(@PathVariable Long id, @RequestBody @Valid EstudianteDTO unEstudianteDto) {
         return unEstudianteService.actualizarEstudiante(id, unEstudianteDto);
 
 

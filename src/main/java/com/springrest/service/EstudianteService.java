@@ -4,7 +4,10 @@ import com.springrest.domain.Estudiante;
 import com.springrest.dto.EstudianteDTO;
 import com.springrest.repository.EstudianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +19,7 @@ public class EstudianteService {
     @Autowired
     private EstudianteRepository estudiantesRepo;
 
-    public EstudianteDTO crearEstudiante(EstudianteDTO unEstudianteDTO){
+    public ResponseEntity<EstudianteDTO> crearEstudiante(EstudianteDTO unEstudianteDTO){
         Estudiante unEstudiante = new Estudiante();
         unEstudiante.setApellido(unEstudianteDTO.getApellido());
         unEstudiante.setNombre(unEstudianteDTO.getNombre());
@@ -25,35 +28,36 @@ public class EstudianteService {
         unEstudiante.setFechaDeNacimiento(unEstudianteDTO.getFechaDeNacimiento());
 
         estudiantesRepo.save(unEstudiante);
-        return unEstudianteDTO;
+        return new ResponseEntity<>(unEstudianteDTO, HttpStatus.CREATED);
     }
 
-    public List<EstudianteDTO> conseguirEstudiantes() {
-        return estudiantesRepo.findAll().stream().map(e-> new EstudianteDTO(e.getNombre(), e.getApellido(), e.getEmail(), e.getDni(), e.getFechaDeNacimiento(), e.getEdad()))
-                .collect(Collectors.toList());
+    public ResponseEntity<List<EstudianteDTO>> conseguirEstudiantes() {
+        return new ResponseEntity<>(estudiantesRepo.findAll().stream().map(e-> new EstudianteDTO(e.getNombre(), e.getApellido(), e.getEmail(), e.getDni(), e.getFechaDeNacimiento(), e.getEdad()))
+                .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    public EstudianteDTO conseguirEstudiante(Long unId) {
+    public ResponseEntity<EstudianteDTO> conseguirEstudiante(Long unId) {
         Optional<Estudiante> unEstudianteOpcional = estudiantesRepo.findById(unId);
 
         if (unEstudianteOpcional.isEmpty()) {
-            throw new RuntimeException("Id invalido");
+           return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
         Estudiante unEstudiante = unEstudianteOpcional.get();
 
-        return new EstudianteDTO(unEstudiante.getNombre(), unEstudiante.getApellido(), unEstudiante.getEmail(), unEstudiante.getDni(), unEstudiante.getFechaDeNacimiento(), unEstudiante.getEdad());
+        return new ResponseEntity<> (new EstudianteDTO(unEstudiante.getNombre(), unEstudiante.getApellido(), unEstudiante.getEmail(), unEstudiante.getDni(), unEstudiante.getFechaDeNacimiento(), unEstudiante.getEdad())
+        ,HttpStatus.OK);
     }
-
+@ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarEstudiante(Long unId) {
         estudiantesRepo.deleteById(unId);
     }
 
-    public EstudianteDTO actualizarEstudiante(Long unId, EstudianteDTO unEstudianteDTO){
+    public ResponseEntity<EstudianteDTO> actualizarEstudiante(Long unId, EstudianteDTO unEstudianteDTO){
         Optional<Estudiante> unEstudianteOpcional = estudiantesRepo.findById(unId);
 
         if (unEstudianteOpcional.isEmpty()) {
-            throw new RuntimeException("Id invalido");
+           return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
         Estudiante unEstudiante = unEstudianteOpcional.get();
@@ -66,7 +70,7 @@ public class EstudianteService {
 
         estudiantesRepo.save(unEstudiante);
 
-        return unEstudianteDTO;
+        return new ResponseEntity<>(unEstudianteDTO,HttpStatus.OK);
 
     }
 }
