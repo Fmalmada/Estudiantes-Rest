@@ -2,6 +2,7 @@ package com.springrest.controller;
 
 import com.springrest.dto.EstudianteDTO;
 import com.springrest.service.EstudianteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class EstudianteController {
     EstudianteService unEstudianteService;
 
     @PostMapping
-    public EstudianteDTO crearEstudiante(@RequestBody EstudianteDTO unEstudianteDTO) {
+    public EstudianteDTO crearEstudiante(@Valid @RequestBody EstudianteDTO unEstudianteDTO) {
         return unEstudianteService.crearEstudiante(unEstudianteDTO);
     }
 

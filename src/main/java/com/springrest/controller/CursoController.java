@@ -18,25 +18,5 @@ public class CursoController {
     public CursoDTO guardarCurso(@RequestBody CursoDTO unCursoDto) {
         return unCursoService.guardarCurso(unCursoDto);
     }
-
-    @GetMapping
-    public List<CursoDTO> encontrarCursos() {
-        return unCursoService.conseguirTodos();
-    }
-
-    @GetMapping("/{id}")
-    public CursoDTO encontrarCurso(@PathVariable Long id) {
-        return unCursoService.encontrarCurso(id);
-    }
-
-    @PutMapping("/{id}")
-    public CursoDTO actualizarCurso(@PathVariable Long id, @RequestBody CursoDTO unCursoDto) {
-        return unCursoService.actualizarCurso(id, unCursoDto);
-    }
-
-    @DeleteMapping("/{id}")
-    public void eliminarCurso(@PathVariable Long id) {
-        unCursoService.borrarCUrso(id);
-    }
 }
 

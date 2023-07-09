@@ -3,6 +3,7 @@ package com.springrest.service;
 import com.springrest.domain.Estudiante;
 import com.springrest.dto.EstudianteDTO;
 import com.springrest.repository.EstudianteRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class EstudianteService {
     private EstudianteRepository estudiantesRepo;
 
     public EstudianteDTO crearEstudiante(EstudianteDTO unEstudianteDTO){
+
+        if (unEstudianteDTO.getEdad() < 19){
+            throw new RuntimeException("El estudiante debe ser mayor a 18 años");
+        }
         Estudiante unEstudiante = new Estudiante();
         unEstudiante.setApellido(unEstudianteDTO.getApellido());
         unEstudiante.setNombre(unEstudianteDTO.getNombre());
@@ -49,7 +54,7 @@ public class EstudianteService {
         estudiantesRepo.deleteById(unId);
     }
 
-    public EstudianteDTO actualizarEstudiante(Long unId, EstudianteDTO unEstudianteDTO){
+    public EstudianteDTO actualizarEstudiante(Long unId, @Valid EstudianteDTO unEstudianteDTO){
         Estudiante unEstudiante = new Estudiante();
         unEstudiante.setId(unId);
         unEstudiante.setNombre(unEstudianteDTO.getNombre());
