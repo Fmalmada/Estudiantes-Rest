@@ -26,8 +26,8 @@ public class InscripcionService {
         Inscripcion unaInscripcion = new Inscripcion();
         unaInscripcion.setFechaDeInscripcion(unaInscripcionDTO.getFechaDeInscripcion());
         unaInscripcion.setEstado(unaInscripcionDTO.getEstado());
-        unaInscripcion.setUnCurso(unaInscripcionDTO.getUnCurso());
-        unaInscripcion.setUnEstudiante(unaInscripcionDTO.getUnEstudiante());
+        unaInscripcion.setCurso(unaInscripcionDTO.getCurso());
+        unaInscripcion.setEstudiante(unaInscripcionDTO.getEstudiante());
 
         inscripcionesRepo.save(unaInscripcion);
         return unaInscripcionDTO;
@@ -35,7 +35,7 @@ public class InscripcionService {
 
     public List<InscripcionDTO> conseguirInscripciones() {
         return inscripcionesRepo.findAll().stream().map(i -> new InscripcionDTO(i.getEstado(), i.getFechaDeInscripcion(),
-                i.getUnCurso(), i.getUnEstudiante())).collect(Collectors.toList());
+                i.getCurso(), i.getEstudiante())).collect(Collectors.toList());
     }
 
     public InscripcionDTO conseguirInscripcion(Long unId) {
@@ -46,7 +46,7 @@ public class InscripcionService {
         }
 
         Inscripcion unaInscripcion = unaInscripcionOptional.get();
-        return new InscripcionDTO(unaInscripcion.getEstado(),unaInscripcion.getFechaDeInscripcion(), unaInscripcion.getUnCurso(), unaInscripcion.getUnEstudiante());
+        return new InscripcionDTO(unaInscripcion.getEstado(),unaInscripcion.getFechaDeInscripcion(), unaInscripcion.getCurso(), unaInscripcion.getEstudiante());
     }
 
     public InscripcionDTO actualizarInscripcion(Long unId, InscripcionDTO unaInscripcionDTO) {
@@ -60,8 +60,8 @@ public class InscripcionService {
 
         unaInscripcion.setEstado(unaInscripcionDTO.getEstado());
         unaInscripcion.setFechaDeInscripcion(unaInscripcionDTO.getFechaDeInscripcion());
-        unaInscripcion.setUnEstudiante(unaInscripcionDTO.getUnEstudiante());
-        unaInscripcion.setUnCurso(unaInscripcionDTO.getUnCurso());
+        unaInscripcion.setEstudiante(unaInscripcionDTO.getEstudiante());
+        unaInscripcion.setCurso(unaInscripcionDTO.getCurso());
 
         inscripcionesRepo.save(unaInscripcion);
 

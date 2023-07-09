@@ -16,9 +16,9 @@ public class Inscripcion {
     private Date fechaDeInscripcion;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Curso unCurso;
+    private Curso curso;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Estudiante unEstudiante;
+    private Estudiante estudiante;
 
 }

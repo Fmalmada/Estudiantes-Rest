@@ -12,6 +12,6 @@ import java.util.Date;
 public class InscripcionDTO {
     private String estado;
     private Date fechaDeInscripcion;
-    private Curso unCurso;
-    private Estudiante unEstudiante;
+    private Curso curso;
+    private Estudiante estudiante;
 }
